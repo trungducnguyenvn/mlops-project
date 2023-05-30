@@ -60,11 +60,11 @@ def run_register_model(data_path: str, top_n: int):
     # Create the experiment if it does not exist
     experiment = client.get_experiment_by_name(HPO_EXPERIMENT_NAME)
     if experiment is None:
-        experiment = client.create_experiment(HPO_EXPERIMENT_NAME)
+        return 
 
     # Retrieve the top_n model runs and log the models
     runs = client.search_runs(
-        experiment_ids=experiment.experiment_id,  # type: ignore
+        experiment_ids=experiment.experiment_id,   # type: ignore
         run_view_type=ViewType.ACTIVE_ONLY,
         max_results=top_n,
         order_by=["metrics.rmse ASC"]
