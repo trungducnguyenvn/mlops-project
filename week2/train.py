@@ -7,7 +7,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
-mlflow.set_experiment("nyc-taxi-experiment")
+mlflow.set_experiment("nyc-taxi-experiment-4")
 
 def load_pickle(filename: str):
     with open(filename, "rb") as f_in:
@@ -22,16 +22,28 @@ def load_pickle(filename: str):
 )
 def run_train(data_path: str) :
 
-    mlflow.autolog()
+    mlflow.sklearn.autolog(disable=True)
 
     X_train, y_train = load_pickle(os.path.join(data_path, "train.pkl"))        
     X_val, y_val = load_pickle(os.path.join(data_path, "val.pkl"))
         
     rf = RandomForestRegressor(max_depth=10, random_state=0)
 
+    mlflow.log_params(rf.get_params())
+
     rf.fit(X_train, y_train)
     y_pred = rf.predict(X_val)
     rmse = mean_squared_error(y_val, y_pred, squared=False)
-        
+
+    mlflow.log_metric("rmse_val", float(rmse))
+
+    # mlflow.sklearn.log_model(rf, "rf-model-3")
+
+    with open("models/rf-model-3.pkl", "wb") as f_out:
+        pickle.dump(rf, f_out)
+
+    mlflow.log_artifact(local_path="models/rf-model-3.pkl", artifact_path="models_pickle")
+
+
 if __name__ == '__main__':
     run_train()
