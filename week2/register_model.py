@@ -8,7 +8,7 @@ from mlflow.tracking import MlflowClient
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
-HPO_EXPERIMENT_NAME = "random-forest-hyperopt"
+HPO_EXPERIMENT_NAME = "random-forest-hyperopt-"
 EXPERIMENT_NAME = "random-forest-best-models"
 RF_PARAMS = ['max_depth', 'n_estimators', 'min_samples_split', 'min_samples_leaf', 'random_state', 'n_jobs']
 
@@ -59,9 +59,7 @@ def run_register_model(data_path: str, top_n: int):
 
     # Create the experiment if it does not exist
     experiment = client.get_experiment_by_name(HPO_EXPERIMENT_NAME)
-    if experiment is None:
-        return 
-
+    
     # Retrieve the top_n model runs and log the models
     runs = client.search_runs(
         experiment_ids=experiment.experiment_id,   # type: ignore
@@ -74,10 +72,18 @@ def run_register_model(data_path: str, top_n: int):
 
     # Select the model with the lowest test RMSE
     experiment = client.get_experiment_by_name(EXPERIMENT_NAME)
-    # best_run = client.search_runs( ...  )[0]
+    runs = client.search_runs(
+        experiment_ids=experiment.experiment_id,  # type: ignore
+        run_view_type=ViewType.ACTIVE_ONLY,
+        order_by=["metrics.test_rmse ASC"]
+    )
+    best_run = runs[0]
+    print(f"Best run: {best_run.info.run_id}, test RMSE: {best_run.data.metrics['test_rmse']}")
 
     # Register the best model
-    # mlflow.register_model( ... )
+    model_uri = f"runs:/{best_run.info.run_id}/model"
+    model_details = mlflow.register_model(model_uri, "best_rf_model")
+    print(f"Model registered: {model_details.name} (version {model_details.version})")
 
 
 if __name__ == '__main__':

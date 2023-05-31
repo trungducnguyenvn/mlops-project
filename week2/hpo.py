@@ -9,7 +9,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
-mlflow.set_experiment("random-forest-hpo")
+mlflow.set_experiment("random-forest-hyperopt-")
 
 
 def load_pickle(filename):
@@ -46,7 +46,8 @@ def run_optimization(data_path: str, num_trials: int):
                 'random_state': 42,
                 'n_jobs': -1
             }
-
+            
+            # log the hyperparameter search space
             mlflow.log_params(params)
 
             rf = RandomForestRegressor(**params)
@@ -54,8 +55,9 @@ def run_optimization(data_path: str, num_trials: int):
             y_pred = rf.predict(X_val)
             rmse = mean_squared_error(y_val, y_pred, squared=False)
 
-            mlflow.log_metric("rmse", float(rmse))
-            mlflow.sklearn.log_model(rf, "rf-model-2")
+            # lof the evaluation metric and the model
+            mlflow.log_metric("rmse_val", float(rmse))
+            mlflow.sklearn.log_model(rf, "rf-model-hpo")
 
             return float(rmse)
 
