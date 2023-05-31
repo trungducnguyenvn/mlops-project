@@ -1,0 +1,19 @@
+artifact_path: rf-model-hpo
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.9
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.2.2
+mlflow_version: 2.3.2
+model_uuid: ec588a24762f4620b04d715b7dd95733
+run_id: e8fd599490314f37885c23db70e310ff
+utc_time_created: '2023-05-31 06:48:06.699740'
