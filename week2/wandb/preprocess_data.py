@@ -34,7 +34,7 @@ def preprocess(df: pd.DataFrame, dv: DictVectorizer, fit_dv: bool = False):
     if fit_dv:
         X = dv.fit_transform(dicts)
     else:
-        X = dv.transform(dicts)
+        X = dv.transform(dicts) 
     return X, dv
 
 
