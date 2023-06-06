@@ -44,19 +44,23 @@ def run_train(
     X_train, y_train = load_pickle(os.path.join(data_path, "train.pkl"))
     X_val, y_val = load_pickle(os.path.join(data_path, "val.pkl"))
 
-    # Define the XGBoost Regressor Mode, train the model and perform prediction
+    # Define the RandomForest Regressor Mode, train the model and perform prediction
     rf = RandomForestRegressor(max_depth=max_depth, random_state=random_state)
     rf.fit(X_train, y_train)
     y_pred = rf.predict(X_val)
 
     mse = mean_squared_error(y_val, y_pred, squared=False)
     # TODO: Log `mse` to Weights & Biases under the key `"MSE"`
+    wandb.log({"MSE": mse})
 
     with open("regressor.pkl", "wb") as f:
         pickle.dump(rf, f)
 
     # TODO: Log `regressor.pkl` as an artifact of type `model`
-
+    artifact = wandb.Artifact("regressor", type="model")
+    artifact.add_file("regressor.pkl")
+    wandb.log_artifact(artifact)
+    
 
 if __name__ == "__main__":
     run_train()
