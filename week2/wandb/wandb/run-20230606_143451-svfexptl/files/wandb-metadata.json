@@ -1,0 +1,49 @@
+{
+    "os": "Windows-10-10.0.22621-SP0",
+    "python": "3.10.9",
+    "heartbeatAt": "2023-06-06T07:34:53.163857",
+    "startedAt": "2023-06-06T07:34:51.946283",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--wandb_project",
+        "wandb-experiments",
+        "--wandb_entity",
+        "trung-duc-nguyenhp",
+        "--data_artifact",
+        "trung-duc-nguyenhp/wandb-experiments/NYC-Taxi:v0"
+    ],
+    "state": "running",
+    "program": "C:\\Users\\Dell\\mlops-project\\mlops-project\\week2\\wandb\\sweep.py",
+    "codePath": "week2\\wandb\\sweep.py",
+    "git": {
+        "remote": "https://github.com/trungducnguyenvn/mlops-project.git",
+        "commit": "6cb4de45db48d3891ae1a53fb445e7f2672fee69"
+    },
+    "email": "trung.duc.nguyenhp@gmail.com",
+    "root": "C:/Users/Dell/mlops-project/mlops-project",
+    "host": "Nguyen-Duc-Trung",
+    "username": "Trung",
+    "executable": "C:\\Users\\Dell\\miniconda3\\envs\\wandb-env\\python.exe",
+    "cpu_count": 12,
+    "cpu_count_logical": 16,
+    "cpu_freq": {
+        "current": 1700.0,
+        "min": 0.0,
+        "max": 1700.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1700.0,
+            "min": 0.0,
+            "max": 1700.0
+        }
+    ],
+    "disk": {
+        "total": 251.16991806030273,
+        "used": 140.23064422607422
+    },
+    "memory": {
+        "total": 15.692127227783203
+    }
+}
