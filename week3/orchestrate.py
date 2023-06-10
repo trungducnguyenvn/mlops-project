@@ -10,10 +10,6 @@ import mlflow
 import xgboost as xgb
 from prefect import flow, task
 
-import warnings
-
-# ignore all warnings
-warnings.filterwarnings("ignore")
 
 
 @task(retries=3, retry_delay_seconds=2)
@@ -60,7 +56,7 @@ def add_features(
     X_train = dv.fit_transform(train_dicts)
 
     val_dicts = df_val[categorical + numerical].to_dict(orient="records")
-    X_val = dv.transform(val_dicts) # type: ignore
+    X_val = dv.transform(val_dicts)
 
     y_train = df_train["duration"].values
     y_val = df_val["duration"].values
