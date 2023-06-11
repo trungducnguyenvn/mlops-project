@@ -12,7 +12,7 @@ from prefect import flow, task
 
 
 
-@task(retries=3, retry_delay_seconds=2)
+@task(retries=3, retry_delay_seconds=2, name="Read taxi data")
 def read_data(filename: str) -> pd.DataFrame:
     """Read data into DataFrame"""
     df = pd.read_parquet(filename)
@@ -112,8 +112,8 @@ def train_best_model(
 
 @flow
 def main_flow(
-    train_path: str = "../data/green_tripdata_2022-01.parquet",
-    val_path: str = "../data/green_tripdata_2022-02.parquet",
+    train_path: str = "./data/green_tripdata_2023-02.parquet",
+    val_path: str = "./data/green_tripdata_2023-03.parquet",
 ) -> None:
     """The main training pipeline"""
 
