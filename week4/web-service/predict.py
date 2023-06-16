@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 
 
 # load the model from models directory
-with open("../models/lin_reg.bin", "rb") as f_in:
+with open("model.bin", "rb") as f_in:
     dv, model = pickle.load(f_in)
 
 # print(f"Model : {model}")

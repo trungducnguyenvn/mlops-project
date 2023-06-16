@@ -2,8 +2,8 @@ import requests
 import json
 
 ride = {
-    "PULocationID": "10",
-    "DOLocationID": "50"
+    "PULocationID": "236",
+    "DOLocationID": "68"
 }
 
 url = "http://localhost:9696/predict"
