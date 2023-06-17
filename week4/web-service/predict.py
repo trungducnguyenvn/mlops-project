@@ -6,9 +6,6 @@ from flask import Flask, request, jsonify
 with open("model.bin", "rb") as f_in:
     dv, model = pickle.load(f_in)
 
-# print(f"Model : {model}")
-# print(f"dv : {dv}")
-
 
 app = Flask("taxi-duration")
 
