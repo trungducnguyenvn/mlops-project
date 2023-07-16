@@ -4,8 +4,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - PREDICTIONS_STREAM_NAME=${PREDICTIONS_STREAM_NAME}
+      - PREDICTIONS_STREAM_NAME=${PREDICTIONS_STREAM_NAME} 
       - TEST_RUN=True
+      - RUN_ID=Test123 
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID 
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY 
       - AWS_DEFAULT_REGION=ap-southeast-1
       - MODEL_LOCATION=/app/model
     volumes:
@@ -16,3 +19,4 @@ services:
   #     - "4566:4566"
   #   environment:
   #     - SERVICES=kinesis
+

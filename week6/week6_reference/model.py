@@ -2,6 +2,7 @@ import os
 import json
 import base64
 import pandas as pd
+import pickle
 
 import boto3
 import mlflow
@@ -40,9 +41,12 @@ class ModelService:
 
     def prepare_features(self, ride):
         features = {}
-        features['PU_DO'] = [f"{ride['PULocationID']}_{ride['DOLocationID']}"]
-        features['trip_distance'] = [ride['trip_distance']]
-        return pd.DataFrame(features)
+        features['PU_DO'] = f"{ride['PULocationID']}_{ride['DOLocationID']}"
+        features['trip_distance'] = ride['trip_distance']
+        with open('dv.pkl', 'rb') as f:
+            dv = pickle.load(f)
+        features = dv.transform([features])
+        return features
 
     def predict(self, features):
         pred = self.model.predict(features)
